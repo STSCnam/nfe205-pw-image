@@ -1,0 +1,22 @@
+[project]
+name = "nfe205-pw-image"
+version = "1.0.0"
+description = "NFE 205 - Indexing and Visual Similarity Search in an Image Database"
+requires-python = ">=3.11"
+keywords = ["python", "image", "descriptor"]
+authors = [
+    { name = "Arthur AUDEBRAND", email = "arthur.audebrand.auditeur@lecnam.net" },
+]
+dependencies = ["Pillow", "types-Pillow", "python-dotenv", "typer[all]"]
+
+[project.optional-dependencies]
+dev = ["black", "mypy"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.black]
+line-length = 89
+include = "\\.pyi?$"
+exclude = "'"

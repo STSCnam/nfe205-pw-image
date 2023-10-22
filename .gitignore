@@ -1,3 +1,9 @@
+# Project
+database/*/*
+output/*/*
+!.gitkeep
+*fatras*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
