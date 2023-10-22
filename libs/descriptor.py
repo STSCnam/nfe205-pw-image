@@ -17,8 +17,8 @@ class ColorDescriptor:
         As the color has a single axis, we can use it as the index of the frequency vector.
 
         Note:
-            The size of the frequency vector equals the bins number.
-            Each point of the frequency vector is a float64.
+            - The size of the frequency vector equals the bins number.
+            - Each point of the frequency vector is a float64.
 
         Args:
             bins (Optional): The bins number to reduce the vector size.
@@ -28,7 +28,7 @@ class ColorDescriptor:
             tuple[float, ...]: The color frequency vector.
         """
 
-        gray_frequency: list[int] = [0] * bins
+        grey_occurrence: list[int] = [0] * bins
         self._image = self._image.convert("L")
         pixels: PyAccess = self._image.load()
         width, height = self._image.size
@@ -37,9 +37,9 @@ class ColorDescriptor:
             x, y = y % width, y // width
             # Normalize color axis according to the bins and using it as the color index
             color_index: int = (bins * pixels[x, y]) // 256
-            gray_frequency[color_index] += 1
+            grey_occurrence[color_index] += 1
 
-        return tuple(map(lambda f: f / (width * height), gray_frequency))
+        return tuple(map(lambda f: f / (width * height), grey_occurrence))
 
     def compute_rgb_histogram(
         self,
@@ -52,8 +52,8 @@ class ColorDescriptor:
         `z(ay + b) + c` so we can compute the color index of the frequency vector.
 
         Note:
-            The size of the frequency vector equals the product of the 3 bins axis.
-            Each point of the frequency vector is a float64.
+            - The size of the frequency vector equals the product of the 3 bins axis.
+            - Each point of the frequency vector is a float64.
 
         Args:
             r_bins (Optional): The bins number of the R axis to reduce the vector size.
@@ -67,7 +67,7 @@ class ColorDescriptor:
             tuple[float, ...]: The color frequency vector.
         """
 
-        rgb_frequency: list[int] = [0] * r_bins * g_bins * b_bins
+        rgb_occurrence: list[int] = [0] * r_bins * g_bins * b_bins
         self._image = self._image.convert("RGB")
         pixels: PyAccess = self._image.load()
         width, height = self._image.size
@@ -78,10 +78,10 @@ class ColorDescriptor:
             # Normalize color axes according to the bins
             r, g, b = (r_bins * r) // 256, (g_bins * g) // 256, (b_bins * b) // 256
             # Compute the color index
-            color_index = (r * g_bins + g) * b_bins + b
-            rgb_frequency[color_index] += 1
+            color_index: int = (r * g_bins + g) * b_bins + b
+            rgb_occurrence[color_index] += 1
 
-        return tuple(map(lambda f: f / (width * height), rgb_frequency))
+        return tuple(map(lambda f: f / (width * height), rgb_occurrence))
 
 
 class DescriptorReader(list):
